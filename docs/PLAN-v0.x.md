@@ -26,25 +26,25 @@ Each item is sized S/M/L (S = hours, M = days, L = weeks) and rated 1–5 for us
 
 ### Tier 1 — ship next
 
-| # | Feature | Eff | Val | Notes |
-|---|---|---|---|---|
-| 1 | **Click-to-highlight + Top-N filter** | S | 5 | Click a row → pin/color/filter to leaders. Works against existing data. MV's most-loved interaction. |
-| 2 | **No-spoilers mode** | S | 4 | Toggle blurs leaderboard, hides totals. Pure CSS/state. |
-| 3 | **Score-by-hole grid** | S | 4 | Adapter extension: per-hole strokes already in ESPN `linescores[]`. Render as expandable row. |
-| 4 | **Saveable layouts (named presets)** | S | 5 | Extend localStorage from single-state to named slots: "Masters Sunday", "PGA Featured", etc. |
-| 5 | **Keyboard shortcuts** | S | 3 | `S` toggle scores, `H` highlight, `?` help. Borrowed from MV. |
+| #   | Feature                               | Eff | Val | Notes                                                                                                |
+| --- | ------------------------------------- | --- | --- | ---------------------------------------------------------------------------------------------------- |
+| 1   | **Click-to-highlight + Top-N filter** | S   | 5   | Click a row → pin/color/filter to leaders. Works against existing data. MV's most-loved interaction. |
+| 2   | **No-spoilers mode**                  | S   | 4   | Toggle blurs leaderboard, hides totals. Pure CSS/state.                                              |
+| 3   | **Score-by-hole grid**                | S   | 4   | Adapter extension: per-hole strokes already in ESPN `linescores[]`. Render as expandable row.        |
+| 4   | **Saveable layouts (named presets)**  | S   | 5   | Extend localStorage from single-state to named slots: "Masters Sunday", "PGA Featured", etc.         |
+| 5   | **Keyboard shortcuts**                | S   | 3   | `S` toggle scores, `H` highlight, `?` help. Borrowed from MV.                                        |
 
 Tier 1 total ≈ 1 week of focused work. Captures ~60% of the MV vibe.
 
 ### Tier 2 — second pass
 
-| # | Feature | Eff | Val | Notes |
-|---|---|---|---|---|
-| 6 | **OCS adapter** (Asian Tour + LET) | M | 4 | Reverse-engineer endpoint patterns; needs live-event capture session. Two tours for one adapter. |
-| 7 | **Sortable columns** | S | 3 | Click `Score` / `Today` headers to sort. |
-| 8 | **Player follow / search** | S | 4 | Type a name, jump to / pin that player across refreshes. |
-| 9 | **Score-color rules editor** | S | 2 | Let user customize the green/red thresholds. |
-| 10 | **Refresh interval picker** | S | 2 | 30s / 60s / 5m / off. |
+| #   | Feature                            | Eff | Val | Notes                                                                                            |
+| --- | ---------------------------------- | --- | --- | ------------------------------------------------------------------------------------------------ |
+| 6   | **OCS adapter** (Asian Tour + LET) | M   | 4   | Reverse-engineer endpoint patterns; needs live-event capture session. Two tours for one adapter. |
+| 7   | **Sortable columns**               | S   | 3   | Click `Score` / `Today` headers to sort.                                                         |
+| 8   | **Player follow / search**         | S   | 4   | Type a name, jump to / pin that player across refreshes.                                         |
+| 9   | **Score-color rules editor**       | S   | 2   | Let user customize the green/red thresholds.                                                     |
+| 10  | **Refresh interval picker**        | S   | 2   | 30s / 60s / 5m / off.                                                                            |
 
 ### Tier 3 — v1 territory
 
@@ -57,13 +57,13 @@ Tier 1 total ≈ 1 week of focused work. Captures ~60% of the MV vibe.
 
 ### Out of scope (for the foreseeable future)
 
-| Feature | Why out |
-|---|---|
-| Live telemetry overlay (shot tracer / per-shot SG sync) | ShotLink raw is syndication-only; DataGolf has aggregates, not per-shot sync |
-| DRM-locked broadcast playback (ESPN+, Peacock inside Teebox) | Won't license third-party Widevine |
-| AI player/caddie radio transcripts | Golf has no isolated mic feed; broadcast audio is too sparse |
-| Replay mode w/ synced leaderboard | Hard problem + DRM-locked source |
-| Watch parties (synced group viewing) | Substantial WebRTC build; v2 territory at best |
+| Feature                                                      | Why out                                                                      |
+| ------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| Live telemetry overlay (shot tracer / per-shot SG sync)      | ShotLink raw is syndication-only; DataGolf has aggregates, not per-shot sync |
+| DRM-locked broadcast playback (ESPN+, Peacock inside Teebox) | Won't license third-party Widevine                                           |
+| AI player/caddie radio transcripts                           | Golf has no isolated mic feed; broadcast audio is too sparse                 |
+| Replay mode w/ synced leaderboard                            | Hard problem + DRM-locked source                                             |
+| Watch parties (synced group viewing)                         | Substantial WebRTC build; v2 territory at best                               |
 
 ## Architectural notes
 

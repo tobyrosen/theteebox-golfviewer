@@ -1,152 +1,245 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Teebox — Golf Viewer</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="data:,">
-</head>
-<body>
-  <header class="bar">
-    <div class="brand">
-      <span class="dot"></span>
-      <span class="name">Teebox</span>
-      <span class="tag">golf, side-by-side</span>
-    </div>
-    <div class="controls">
-      <label class="field">
-        <span>Tour</span>
-        <select id="tour"></select>
-      </label>
-      <details class="advanced-toggle">
-        <summary class="advanced-summary">Data source</summary>
-        <label class="field grow">
-          <span>Scores URL</span>
-          <input id="scoresUrl" type="url" spellcheck="false" autocomplete="off" placeholder="https://…">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Teebox — Golf Viewer</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <header class="bar">
+      <div class="brand">
+        <span class="dot"></span>
+        <span class="name">Teebox</span>
+        <span class="tag">golf, side-by-side</span>
+      </div>
+      <div class="controls">
+        <label class="field">
+          <span>Tour</span>
+          <select id="tour"></select>
         </label>
-      </details>
-      <label class="field grow">
-        <span>YouTube URL</span>
-        <input id="ytUrl" type="url" spellcheck="false" autocomplete="off" placeholder="https://youtube.com/watch?v=…">
-      </label>
-      <button id="fontToggle" type="button" title="Toggle font size">Aa</button>
-      <button id="refreshNow" type="button" title="Refresh scores  [R]">↻ Refresh</button>
-      <button id="togglePause" type="button" title="Pause/resume auto-refresh">⏸ Pause</button>
-      <button id="shortcutHelp" type="button" title="Keyboard shortcuts  [?]">?</button>
-    </div>
-    <div class="status" id="status">ready</div>
-  </header>
+        <details class="advanced-toggle">
+          <summary class="advanced-summary">Data source</summary>
+          <label class="field grow">
+            <span>Scores URL</span>
+            <input
+              id="scoresUrl"
+              type="url"
+              spellcheck="false"
+              autocomplete="off"
+              placeholder="https://…"
+            />
+          </label>
+        </details>
+        <label class="field grow">
+          <span>YouTube URL</span>
+          <input
+            id="ytUrl"
+            type="url"
+            spellcheck="false"
+            autocomplete="off"
+            placeholder="https://youtube.com/watch?v=…"
+          />
+        </label>
+        <button id="fontToggle" type="button" title="Toggle font size">
+          Aa
+        </button>
+        <button id="refreshNow" type="button" title="Refresh scores  [R]">
+          ↻ Refresh
+        </button>
+        <button
+          id="togglePause"
+          type="button"
+          title="Pause/resume auto-refresh"
+        >
+          ⏸ Pause
+        </button>
+        <button id="shortcutHelp" type="button" title="Keyboard shortcuts  [?]">
+          ?
+        </button>
+      </div>
+      <div class="status" id="status">ready</div>
+    </header>
 
-  <main class="split">
-    <section class="pane video">
-      <div class="landing" id="videoEmpty">
-        <div class="landing-mark">
-          <div class="landing-dot"></div>
-          <div class="landing-word">Teebox</div>
+    <main class="split">
+      <section class="pane video">
+        <div class="landing" id="videoEmpty">
+          <div class="landing-mark">
+            <div class="landing-dot"></div>
+            <div class="landing-word">Teebox</div>
+          </div>
+          <div class="landing-tag">
+            Watch golf with a leaderboard side-by-side.
+          </div>
+          <div class="landing-hint">
+            Paste a YouTube URL <span class="kbd">↑</span> to start watching.
+          </div>
+          <div class="landing-actions">
+            <a
+              id="findBroadcasts"
+              class="btn-primary"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              >Find broadcasts on YouTube ↗</a
+            >
+          </div>
+          <ul class="landing-tips">
+            <li>Leaderboard refreshes every 60s automatically</li>
+            <li>Drag the divider to resize panes</li>
+            <li>
+              Pick a different tour from the dropdown <span class="kbd">↑</span>
+            </li>
+          </ul>
         </div>
-        <div class="landing-tag">Watch golf with a leaderboard side-by-side.</div>
-        <div class="landing-hint">Paste a YouTube URL <span class="kbd">↑</span> to start watching.</div>
-        <div class="landing-actions">
-          <a id="findBroadcasts" class="btn-primary" href="#" target="_blank" rel="noopener">Find broadcasts on YouTube ↗</a>
+        <iframe
+          id="ytFrame"
+          hidden
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </section>
+
+      <div class="divider" id="divider" title="drag to resize"></div>
+
+      <section class="pane scores">
+        <div class="scores-head">
+          <div class="title" id="scoresTitle">Leaderboard</div>
+          <div class="meta" id="scoresMeta"></div>
         </div>
-        <ul class="landing-tips">
-          <li>Leaderboard refreshes every 60s automatically</li>
-          <li>Drag the divider to resize panes</li>
-          <li>Pick a different tour from the dropdown <span class="kbd">↑</span></li>
+        <div class="table-wrap" id="tableWrap">
+          <div class="empty" id="scoresEmpty">pick a tour and click ↻</div>
+        </div>
+      </section>
+    </main>
+
+    <div
+      class="wizard"
+      id="wizard"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="wizardTitle"
+    >
+      <div class="wizard-backdrop" data-wizard-dismiss></div>
+      <div class="wizard-card" role="document">
+        <header class="wizard-head">
+          <div class="brand">
+            <span class="dot"></span>
+            <span class="name">Teebox</span>
+          </div>
+          <button
+            class="wizard-x"
+            type="button"
+            data-wizard-dismiss
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </header>
+
+        <div class="wizard-body">
+          <section class="wizard-step" data-step="1">
+            <h2 id="wizardTitle" class="wizard-title">Pick a tour</h2>
+            <p class="wizard-copy">
+              Teebox renders any leaderboard through a tour adapter. Pick one to
+              start — you can switch later.
+            </p>
+            <label class="field grow">
+              <span>Tour</span>
+              <select id="wizardTour"></select>
+            </label>
+          </section>
+
+          <section class="wizard-step" data-step="2" hidden>
+            <h2 class="wizard-title">Drop a YouTube URL</h2>
+            <p class="wizard-copy">
+              Paste a broadcast link — or skip and use the broadcast-search
+              shortcut later.
+            </p>
+            <label class="field grow">
+              <span>YouTube URL</span>
+              <input
+                id="wizardYt"
+                type="url"
+                spellcheck="false"
+                autocomplete="off"
+                placeholder="https://youtube.com/watch?v=…"
+              />
+            </label>
+            <p class="wizard-hint">
+              No URL? No problem. You'll get a "Find broadcasts on YouTube"
+              button on the next screen.
+            </p>
+          </section>
+
+          <section class="wizard-step" data-step="3" hidden>
+            <h2 class="wizard-title">You're set</h2>
+            <ul class="wizard-bullets">
+              <li>Leaderboard refreshes every 60 seconds.</li>
+              <li>Drag the divider to resize panes.</li>
+              <li>
+                Hit <span class="kbd">↻</span> to refresh now,
+                <span class="kbd">⏸</span> to pause.
+              </li>
+            </ul>
+          </section>
+        </div>
+
+        <footer class="wizard-foot">
+          <div class="wizard-dots" aria-hidden="true">
+            <span class="wizard-dot is-active"></span>
+            <span class="wizard-dot"></span>
+            <span class="wizard-dot"></span>
+          </div>
+          <div class="wizard-actions">
+            <button
+              type="button"
+              class="wizard-btn ghost"
+              id="wizardBack"
+              hidden
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              class="wizard-btn ghost"
+              id="wizardSkip"
+              data-wizard-dismiss
+            >
+              Skip
+            </button>
+            <button type="button" class="wizard-btn primary" id="wizardNext">
+              Next →
+            </button>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <div class="shortcut-overlay" id="shortcutOverlay" hidden>
+      <div class="shortcut-backdrop" id="shortcutBackdrop"></div>
+      <div class="shortcut-card">
+        <div class="shortcut-head">
+          <span class="shortcut-title">Keyboard shortcuts</span>
+          <button class="wizard-x" id="shortcutClose" aria-label="Close">
+            ✕
+          </button>
+        </div>
+        <ul class="shortcut-list">
+          <li><kbd>R</kbd> Reload leaderboard</li>
+          <li><kbd>F</kbd> Fullscreen video pane</li>
+          <li><kbd>[</kbd> More leaderboard</li>
+          <li><kbd>]</kbd> More video</li>
+          <li><kbd>A</kbd> Cycle font size</li>
+          <li><kbd>?</kbd> Toggle this overlay</li>
+          <li><kbd>Esc</kbd> Close overlay</li>
         </ul>
       </div>
-      <iframe id="ytFrame" hidden allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    </section>
-
-    <div class="divider" id="divider" title="drag to resize"></div>
-
-    <section class="pane scores">
-      <div class="scores-head">
-        <div class="title" id="scoresTitle">Leaderboard</div>
-        <div class="meta" id="scoresMeta"></div>
-      </div>
-      <div class="table-wrap" id="tableWrap">
-        <div class="empty" id="scoresEmpty">pick a tour and click ↻</div>
-      </div>
-    </section>
-  </main>
-
-  <div class="wizard" id="wizard" hidden role="dialog" aria-modal="true" aria-labelledby="wizardTitle">
-    <div class="wizard-backdrop" data-wizard-dismiss></div>
-    <div class="wizard-card" role="document">
-      <header class="wizard-head">
-        <div class="brand">
-          <span class="dot"></span>
-          <span class="name">Teebox</span>
-        </div>
-        <button class="wizard-x" type="button" data-wizard-dismiss aria-label="Close">✕</button>
-      </header>
-
-      <div class="wizard-body">
-        <section class="wizard-step" data-step="1">
-          <h2 id="wizardTitle" class="wizard-title">Pick a tour</h2>
-          <p class="wizard-copy">Teebox renders any leaderboard through a tour adapter. Pick one to start — you can switch later.</p>
-          <label class="field grow">
-            <span>Tour</span>
-            <select id="wizardTour"></select>
-          </label>
-        </section>
-
-        <section class="wizard-step" data-step="2" hidden>
-          <h2 class="wizard-title">Drop a YouTube URL</h2>
-          <p class="wizard-copy">Paste a broadcast link — or skip and use the broadcast-search shortcut later.</p>
-          <label class="field grow">
-            <span>YouTube URL</span>
-            <input id="wizardYt" type="url" spellcheck="false" autocomplete="off" placeholder="https://youtube.com/watch?v=…">
-          </label>
-          <p class="wizard-hint">No URL? No problem. You'll get a "Find broadcasts on YouTube" button on the next screen.</p>
-        </section>
-
-        <section class="wizard-step" data-step="3" hidden>
-          <h2 class="wizard-title">You're set</h2>
-          <ul class="wizard-bullets">
-            <li>Leaderboard refreshes every 60 seconds.</li>
-            <li>Drag the divider to resize panes.</li>
-            <li>Hit <span class="kbd">↻</span> to refresh now, <span class="kbd">⏸</span> to pause.</li>
-          </ul>
-        </section>
-      </div>
-
-      <footer class="wizard-foot">
-        <div class="wizard-dots" aria-hidden="true">
-          <span class="wizard-dot is-active"></span>
-          <span class="wizard-dot"></span>
-          <span class="wizard-dot"></span>
-        </div>
-        <div class="wizard-actions">
-          <button type="button" class="wizard-btn ghost" id="wizardBack" hidden>Back</button>
-          <button type="button" class="wizard-btn ghost" id="wizardSkip" data-wizard-dismiss>Skip</button>
-          <button type="button" class="wizard-btn primary" id="wizardNext">Next →</button>
-        </div>
-      </footer>
     </div>
-  </div>
 
-  <div class="shortcut-overlay" id="shortcutOverlay" hidden>
-    <div class="shortcut-backdrop" id="shortcutBackdrop"></div>
-    <div class="shortcut-card">
-      <div class="shortcut-head">
-        <span class="shortcut-title">Keyboard shortcuts</span>
-        <button class="wizard-x" id="shortcutClose" aria-label="Close">✕</button>
-      </div>
-      <ul class="shortcut-list">
-        <li><kbd>R</kbd> Reload leaderboard</li>
-        <li><kbd>F</kbd> Fullscreen video pane</li>
-        <li><kbd>[</kbd> More leaderboard</li>
-        <li><kbd>]</kbd> More video</li>
-        <li><kbd>A</kbd> Cycle font size</li>
-        <li><kbd>?</kbd> Toggle this overlay</li>
-        <li><kbd>Esc</kbd> Close overlay</li>
-      </ul>
-    </div>
-  </div>
-
-  <script type="module" src="app.js"></script>
-</body>
+    <script type="module" src="app.js"></script>
+  </body>
 </html>

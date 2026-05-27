@@ -74,15 +74,18 @@ The allowlist is the open-source-clean way to keep the proxy from becoming an op
 
 ```js
 export default {
-  id: 'allthailand',
-  name: 'All Thailand Golf Tour',
-  defaultUrl: 'https://www.allthailandgolftour.com/tournaments/gettable/3755/score',
+  id: "allthailand",
+  name: "All Thailand Golf Tour",
+  defaultUrl:
+    "https://www.allthailandgolftour.com/tournaments/gettable/3755/score",
   // Returns:
   // {
   //   columns: [{ key: 'pos', label: 'Pos' }, ...],
   //   rows:    [{ pos: '1', score: '-5', player: '...', country: 'THA', today: '-5', holesPlayed: 7 }, ...]
   // }
-  parse(html) { /* DOMParser, return normalized data */ }
+  parse(html) {
+    /* DOMParser, return normalized data */
+  },
 };
 ```
 
@@ -119,6 +122,7 @@ teebox/
 Source: `https://www.allthailandgolftour.com/tournaments/gettable/3755/score`
 
 Returns an HTML fragment with one `<table>`:
+
 - thead row 1: rowspan=3 cells `Pos / Score / Player / Ctry`, then 18 hole-number cells, then `Today`
 - thead row 2: par for each hole
 - tbody `<tr data-score="-5">` rows:
@@ -130,6 +134,7 @@ Returns an HTML fragment with one `<table>`:
   - td 23: today's score with `data-holes-played` attribute
 
 Adapter normalizes to:
+
 ```js
 {
   pos: '1',
@@ -154,6 +159,7 @@ ESPN's undocumented public API at `site.api.espn.com/apis/site/v2/sports/golf/{l
 - **PGA Tour Champions** — `champions-tour`
 
 Plus:
+
 - **All Thailand Golf Tour** — direct HTML scrape (`allthailandgolftour.com`)
 - **Custom URL** — generic fallback for any HTML table
 
@@ -163,7 +169,7 @@ See [`docs/research/tour-sources.md`](docs/research/tour-sources.md) for full pe
 
 - **Asian Tour** + **Ladies European Tour** — both run on OCS Sport (different vendor than ESPN). One OCS adapter would cover both, but reverse-engineering needs a live-event DevTools capture.
 - **TGL** — ESPN league code `tgl`, easy add via the same factory.
-- **Olympic golf** — `mens-olympics-golf` / `womens-olympics-golf`.
+- **Olympic golf** — `mens-olympics-golf` / `women-olympics-golf`.
 
 ## Inspirations & longer-term roadmap
 

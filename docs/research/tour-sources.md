@@ -4,14 +4,15 @@ Goal: identify scoring data sources for each major tour so a `~30–80 line` ada
 
 ## Headline finding — ESPN's hidden API covers 6 of 8 tours
 
-ESPN's undocumented public API (`site.api.espn.com`) returns full leaderboard JSON for PGA, DP World (eur), LIV, LPGA, Korn Ferry (ntw), and Champions (champions-tour). No auth, CORS-permissive enough to be widely reused, and refreshed during live play. Verified league list via `https://sports.core.api.espn.com/v2/sports/golf/leagues` (returned: `pga, eur, liv, lpga, champions-tour, ntw, tgl, mens-olympics-golf, womens-olympics-golf`). LET and Asian Tour are NOT in ESPN's coverage and require their own sources.
+ESPN's undocumented public API (`site.api.espn.com`) returns full leaderboard JSON for PGA, DP World (eur), LIV, LPGA, Korn Ferry (ntw), and Champions (champions-tour). No auth, CORS-permissive enough to be widely reused, and refreshed during live play. Verified league list via `https://sports.core.api.espn.com/v2/sports/golf/leagues` (returned: `pga, eur, liv, lpga, champions-tour, ntw, tgl, mens-olympics-golf, women-olympics-golf`). LET and Asian Tour are NOT in ESPN's coverage and require their own sources.
 
 Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard` returns `events[0].competitions[0].competitors[]`, each containing `{ athlete.displayName, athlete.flag.alt, score, linescores[] , status }`. During live tournaments `score` populates with relative-to-par; `linescores[]` contain per-round strokes; the competition-level `status` carries `period` (current round) and per-competitor hole progress when play is live.
 
 ---
 
 ## PGA Tour
-- **Site**: https://www.pgatour.com/leaderboard
+
+- **Site**: <https://www.pgatour.com/leaderboard>
 - **Approach**: API (ESPN proxy)
 - **Endpoint**: `https://site.api.espn.com/apis/site/v2/sports/golf/pga/scoreboard`
 - **Auth**: none
@@ -22,7 +23,8 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 - **Adapter feasibility**: 5
 
 ## DP World Tour
-- **Site**: https://www.europeantour.com/dpworld-tour/
+
+- **Site**: <https://www.europeantour.com/dpworld-tour/>
 - **Approach**: API (ESPN proxy, league code `eur`)
 - **Endpoint**: `https://site.api.espn.com/apis/site/v2/sports/golf/eur/scoreboard`
 - **Auth**: none
@@ -33,7 +35,8 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 - **Adapter feasibility**: 5
 
 ## LIV Golf
-- **Site**: https://www.livgolf.com
+
+- **Site**: <https://www.livgolf.com>
 - **Approach**: API (ESPN proxy, league code `liv`)
 - **Endpoint**: `https://site.api.espn.com/apis/site/v2/sports/golf/liv/scoreboard`
 - **Auth**: none
@@ -44,7 +47,8 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 - **Adapter feasibility**: 4
 
 ## LPGA Tour
-- **Site**: https://www.lpga.com
+
+- **Site**: <https://www.lpga.com>
 - **Approach**: API (ESPN proxy, league code `lpga`)
 - **Endpoint**: `https://site.api.espn.com/apis/site/v2/sports/golf/lpga/scoreboard`
 - **Auth**: none
@@ -55,7 +59,8 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 - **Adapter feasibility**: 5
 
 ## Korn Ferry Tour
-- **Site**: https://www.pgatour.com/korn-ferry-tour/leaderboard
+
+- **Site**: <https://www.pgatour.com/korn-ferry-tour/leaderboard>
 - **Approach**: API (ESPN proxy, league code `ntw` — legacy "Nationwide" code)
 - **Endpoint**: `https://site.api.espn.com/apis/site/v2/sports/golf/ntw/scoreboard`
 - **Auth**: none
@@ -66,7 +71,8 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 - **Adapter feasibility**: 5
 
 ## PGA Tour Champions
-- **Site**: https://www.pgatour.com/pgatour-champions/leaderboard
+
+- **Site**: <https://www.pgatour.com/pgatour-champions/leaderboard>
 - **Approach**: API (ESPN proxy, league code `champions-tour`)
 - **Endpoint**: `https://site.api.espn.com/apis/site/v2/sports/golf/champions-tour/scoreboard`
 - **Auth**: none
@@ -77,7 +83,8 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 - **Adapter feasibility**: 5
 
 ## Asian Tour
-- **Site**: https://www.asiantour.com/leaderboard/
+
+- **Site**: <https://www.asiantour.com/leaderboard/>
 - **Approach**: scrape (or reverse-engineer OCS feed)
 - **Endpoint**: Front-end is an Angular SPA; the embedded leaderboard widget at `https://wp-asiantour.ocs-sport.com/leaderboard/` calls OCS Sport endpoints of the form `https://asiantour-live.ocs-asia.com/tic/tmticx.cgi?...` and `tmscores.cgi?tourn={code}~season={code}~enhanced=Y~jsout=x`. Endpoint signatures extracted from the live `app.js` (`/wp-content/themes/ocs-quantum/js/app.js`).
 - **Auth**: none observed, but my unauthenticated curl probes returned 404 — likely needs correct Referer/Origin headers, or the host requires a different sub-path. Needs DevTools session against a live event to capture the exact URL.
@@ -88,7 +95,8 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 - **Adapter feasibility**: 2
 
 ## Ladies European Tour
-- **Site**: https://ladieseuropeantour.com/leaderboard/
+
+- **Site**: <https://ladieseuropeantour.com/leaderboard/>
 - **Approach**: scrape (OCS feed, same vendor as Asian Tour)
 - **Endpoint**: Powered by `https://live-let.ocs-software.com/` (OCS Sport white-label, sister system to Asian Tour's `ocs-asia.com`). Same `tmticx.cgi` / `tmscores.cgi` URL pattern expected. Public ladieseuropeantour.com returns 403 to bots — would need browser-style headers.
 - **Auth**: none, but anti-bot in front of the public site
@@ -102,16 +110,16 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 
 ## Summary table — ranked by feasibility
 
-| Rank | Tour | Source | Effort |
-|---|---|---|---|
-| 1 | PGA Tour | ESPN `pga` | 1 hour |
-| 1 | LPGA | ESPN `lpga` | 1 hour |
-| 1 | DP World | ESPN `eur` | 1 hour |
-| 1 | Korn Ferry | ESPN `ntw` | 1 hour |
-| 1 | PGA Champions | ESPN `champions-tour` | 1 hour |
-| 6 | LIV (individual) | ESPN `liv` | 1 hour |
-| 7 | Asian Tour | OCS Sport reverse | 1 day + |
-| 7 | Ladies European | OCS Sport reverse | 1 day + (shares Asian work) |
+| Rank | Tour             | Source                | Effort                      |
+| ---- | ---------------- | --------------------- | --------------------------- |
+| 1    | PGA Tour         | ESPN `pga`            | 1 hour                      |
+| 1    | LPGA             | ESPN `lpga`           | 1 hour                      |
+| 1    | DP World         | ESPN `eur`            | 1 hour                      |
+| 1    | Korn Ferry       | ESPN `ntw`            | 1 hour                      |
+| 1    | PGA Champions    | ESPN `champions-tour` | 1 hour                      |
+| 6    | LIV (individual) | ESPN `liv`            | 1 hour                      |
+| 7    | Asian Tour       | OCS Sport reverse     | 1 day +                     |
+| 7    | Ladies European  | OCS Sport reverse     | 1 day + (shares Asian work) |
 
 **Recommended v0.x roadmap**: build ONE shared `espn.js` adapter parameterized by league code → instantly covers 6 tours. Then attempt a single `ocs.js` adapter for Asian Tour + LET. Skip LIV team standings until somebody asks.
 
@@ -135,6 +143,7 @@ Pattern: `https://site.api.espn.com/apis/site/v2/sports/golf/{league}/scoreboard
 No prior art found for OCS Sport (Asian Tour / LET) — pioneering work if we go there.
 
 ## Sources
+
 - ESPN league list: verified at `https://sports.core.api.espn.com/v2/sports/golf/leagues`
 - ESPN endpoints verified live: `pga`, `eur`, `liv`, `lpga`, `ntw`, `champions-tour`, `tgl` all returned HTTP 200 on `/scoreboard`
 - Asian Tour endpoint patterns extracted from `https://wp-asiantour.ocs-sport.com/wp-content/themes/ocs-quantum/js/app.js`

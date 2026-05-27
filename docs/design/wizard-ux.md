@@ -2,7 +2,6 @@
 
 > **Status:** implemented in v0.1. This doc captures the design rationale and is preserved as a reference.
 
-
 Local Teebox dashboard, first-clone experience. 3 steps, modal overlay, dark theme, vanilla JS. Skippable. Dismissed once via `localStorage["teebox.welcomed"] = "1"`.
 
 ## Goals
@@ -113,7 +112,14 @@ Edge cases:
 Append immediately before `<script type="module" src="app.js"></script>`:
 
 ```html
-<div class="wizard" id="wizard" hidden role="dialog" aria-modal="true" aria-labelledby="wizardTitle">
+<div
+  class="wizard"
+  id="wizard"
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="wizardTitle"
+>
   <div class="wizard-backdrop" data-wizard-dismiss></div>
   <div class="wizard-card" role="document">
     <header class="wizard-head">
@@ -121,14 +127,24 @@ Append immediately before `<script type="module" src="app.js"></script>`:
         <span class="dot"></span>
         <span class="name">Teebox</span>
       </div>
-      <button class="wizard-x" type="button" data-wizard-dismiss aria-label="Close">✕</button>
+      <button
+        class="wizard-x"
+        type="button"
+        data-wizard-dismiss
+        aria-label="Close"
+      >
+        ✕
+      </button>
     </header>
 
     <div class="wizard-body">
       <!-- Step 1 -->
       <section class="wizard-step" data-step="1">
         <h2 id="wizardTitle" class="wizard-title">Pick a tour</h2>
-        <p class="wizard-copy">Teebox renders any leaderboard through a tour adapter. Pick one to start — you can switch later.</p>
+        <p class="wizard-copy">
+          Teebox renders any leaderboard through a tour adapter. Pick one to
+          start — you can switch later.
+        </p>
         <label class="field grow">
           <span>Tour</span>
           <select id="wizardTour"></select>
@@ -138,12 +154,24 @@ Append immediately before `<script type="module" src="app.js"></script>`:
       <!-- Step 2 -->
       <section class="wizard-step" data-step="2" hidden>
         <h2 class="wizard-title">Drop a YouTube URL</h2>
-        <p class="wizard-copy">Paste a broadcast link — or skip and use the broadcast-search shortcut later.</p>
+        <p class="wizard-copy">
+          Paste a broadcast link — or skip and use the broadcast-search shortcut
+          later.
+        </p>
         <label class="field grow">
           <span>YouTube URL</span>
-          <input id="wizardYt" type="url" spellcheck="false" autocomplete="off" placeholder="https://youtube.com/watch?v=…">
+          <input
+            id="wizardYt"
+            type="url"
+            spellcheck="false"
+            autocomplete="off"
+            placeholder="https://youtube.com/watch?v=…"
+          />
         </label>
-        <p class="wizard-hint">No URL? No problem. You'll get a "Find broadcasts on YouTube" button on the next screen.</p>
+        <p class="wizard-hint">
+          No URL? No problem. You'll get a "Find broadcasts on YouTube" button
+          on the next screen.
+        </p>
       </section>
 
       <!-- Step 3 -->
@@ -152,7 +180,10 @@ Append immediately before `<script type="module" src="app.js"></script>`:
         <ul class="wizard-bullets">
           <li>Leaderboard refreshes every 60 seconds.</li>
           <li>Drag the divider to resize panes.</li>
-          <li>Hit <span class="kbd">↻</span> to refresh now, <span class="kbd">⏸</span> to pause.</li>
+          <li>
+            Hit <span class="kbd">↻</span> to refresh now,
+            <span class="kbd">⏸</span> to pause.
+          </li>
         </ul>
       </section>
     </div>
@@ -164,9 +195,20 @@ Append immediately before `<script type="module" src="app.js"></script>`:
         <span class="wizard-dot"></span>
       </div>
       <div class="wizard-actions">
-        <button type="button" class="wizard-btn ghost" id="wizardBack" hidden>Back</button>
-        <button type="button" class="wizard-btn ghost" id="wizardSkip" data-wizard-dismiss>Skip</button>
-        <button type="button" class="wizard-btn primary" id="wizardNext">Next →</button>
+        <button type="button" class="wizard-btn ghost" id="wizardBack" hidden>
+          Back
+        </button>
+        <button
+          type="button"
+          class="wizard-btn ghost"
+          id="wizardSkip"
+          data-wizard-dismiss
+        >
+          Skip
+        </button>
+        <button type="button" class="wizard-btn primary" id="wizardNext">
+          Next →
+        </button>
       </div>
     </footer>
   </div>
@@ -190,7 +232,9 @@ Append at end of file:
   align-items: center;
   justify-content: center;
 }
-.wizard[hidden] { display: none; }
+.wizard[hidden] {
+  display: none;
+}
 
 .wizard-backdrop {
   position: absolute;
@@ -227,9 +271,15 @@ Append at end of file:
   padding: 0;
   border-radius: 4px;
 }
-.wizard-x:hover { color: var(--text); background: var(--panel); }
+.wizard-x:hover {
+  color: var(--text);
+  background: var(--panel);
+}
 
-.wizard-body { padding: 24px 28px 8px; min-height: 200px; }
+.wizard-body {
+  padding: 24px 28px 8px;
+  min-height: 200px;
+}
 .wizard-title {
   font-size: 18px;
   font-weight: 700;
@@ -269,14 +319,25 @@ Append at end of file:
   border-top: 1px solid var(--line);
   background: var(--panel);
 }
-.wizard-dots { display: flex; gap: 6px; }
+.wizard-dots {
+  display: flex;
+  gap: 6px;
+}
 .wizard-dot {
-  width: 6px; height: 6px; border-radius: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
   background: var(--line);
 }
-.wizard-dot.is-active { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+.wizard-dot.is-active {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
 
-.wizard-actions { display: flex; gap: 8px; }
+.wizard-actions {
+  display: flex;
+  gap: 8px;
+}
 .wizard-btn {
   height: 32px;
   padding: 0 14px;
@@ -290,14 +351,19 @@ Append at end of file:
   color: var(--muted);
   border: 1px solid var(--line);
 }
-.wizard-btn.ghost:hover { color: var(--text); border-color: var(--accent-dim); }
+.wizard-btn.ghost:hover {
+  color: var(--text);
+  border-color: var(--accent-dim);
+}
 .wizard-btn.primary {
   background: var(--accent);
   color: #06120b;
   font-weight: 600;
   border: 1px solid transparent;
 }
-.wizard-btn.primary:hover { background: #6cf09c; }
+.wizard-btn.primary:hover {
+  background: #6cf09c;
+}
 ```
 
 ---
@@ -308,27 +374,40 @@ Append after `startTimer();` (last line of current bootstrap):
 
 ```js
 // --- first-launch wizard ---
-const WIZARD_KEY = 'teebox.welcomed';
+const WIZARD_KEY = "teebox.welcomed";
 
-function safeGet(k) { try { return localStorage.getItem(k); } catch { return null; } }
-function safeSet(k, v) { try { localStorage.setItem(k, v); } catch { /* ignore */ } }
+function safeGet(k) {
+  try {
+    return localStorage.getItem(k);
+  } catch {
+    return null;
+  }
+}
+function safeSet(k, v) {
+  try {
+    localStorage.setItem(k, v);
+  } catch {
+    /* ignore */
+  }
+}
 
 function initWizard() {
-  if (safeGet(WIZARD_KEY) === '1') return;
+  if (safeGet(WIZARD_KEY) === "1") return;
 
-  const root      = document.getElementById('wizard');
-  const wTour     = document.getElementById('wizardTour');
-  const wYt       = document.getElementById('wizardYt');
-  const btnBack   = document.getElementById('wizardBack');
-  const btnNext   = document.getElementById('wizardNext');
-  const dots      = root.querySelectorAll('.wizard-dot');
-  const steps     = root.querySelectorAll('.wizard-step');
-  const dismissEls = root.querySelectorAll('[data-wizard-dismiss]');
+  const root = document.getElementById("wizard");
+  const wTour = document.getElementById("wizardTour");
+  const wYt = document.getElementById("wizardYt");
+  const btnBack = document.getElementById("wizardBack");
+  const btnNext = document.getElementById("wizardNext");
+  const dots = root.querySelectorAll(".wizard-dot");
+  const steps = root.querySelectorAll(".wizard-step");
+  const dismissEls = root.querySelectorAll("[data-wizard-dismiss]");
 
   // Mirror tour options into the wizard select
   for (const a of ADAPTERS) {
-    const opt = document.createElement('option');
-    opt.value = a.id; opt.textContent = a.name;
+    const opt = document.createElement("option");
+    opt.value = a.id;
+    opt.textContent = a.name;
     wTour.appendChild(opt);
   }
   wTour.value = els.tour.value;
@@ -337,15 +416,14 @@ function initWizard() {
   const total = steps.length;
 
   function render() {
-    steps.forEach(s => { s.hidden = Number(s.dataset.step) !== step; });
-    dots.forEach((d, i) => d.classList.toggle('is-active', i === step - 1));
+    steps.forEach((s) => {
+      s.hidden = Number(s.dataset.step) !== step;
+    });
+    dots.forEach((d, i) => d.classList.toggle("is-active", i === step - 1));
     btnBack.hidden = step === 1;
-    btnNext.textContent = step === total ? 'Start watching' : 'Next →';
+    btnNext.textContent = step === total ? "Start watching" : "Next →";
     // Focus the primary control on each step
-    const focusTarget =
-      step === 1 ? wTour :
-      step === 2 ? wYt :
-      btnNext;
+    const focusTarget = step === 1 ? wTour : step === 2 ? wYt : btnNext;
     setTimeout(() => focusTarget.focus(), 0);
   }
 
@@ -354,42 +432,61 @@ function initWizard() {
       els.tour.value = wTour.value;
       applyAdapterDefaults();
     }
-    const yt = (wYt.value || '').trim();
+    const yt = (wYt.value || "").trim();
     if (yt) {
       els.ytUrl.value = yt;
       applyYoutube();
     }
-    safeSet(WIZARD_KEY, '1');
+    safeSet(WIZARD_KEY, "1");
     root.hidden = true;
-    document.removeEventListener('keydown', onKey);
+    document.removeEventListener("keydown", onKey);
     loadScores();
     els.tour.focus();
   }
 
   function onKey(e) {
-    if (e.key === 'Escape') { e.preventDefault(); commitAndClose(); return; }
-    if (e.key === 'Tab') trapFocus(e);
+    if (e.key === "Escape") {
+      e.preventDefault();
+      commitAndClose();
+      return;
+    }
+    if (e.key === "Tab") trapFocus(e);
   }
 
   // Focus trap: keep Tab cycling within the modal
   function trapFocus(e) {
     const focusables = root.querySelectorAll(
-      'button:not([hidden]), select, input, [tabindex]:not([tabindex="-1"])'
+      'button:not([hidden]), select, input, [tabindex]:not([tabindex="-1"])',
     );
-    const visible = Array.from(focusables).filter(el => !el.closest('[hidden]'));
+    const visible = Array.from(focusables).filter(
+      (el) => !el.closest("[hidden]"),
+    );
     if (!visible.length) return;
-    const first = visible[0], last = visible[visible.length - 1];
-    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    const first = visible[0],
+      last = visible[visible.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
-  btnBack.addEventListener('click', () => { if (step > 1) { step--; render(); } });
-  btnNext.addEventListener('click', () => {
-    if (step < total) { step++; render(); }
-    else commitAndClose();
+  btnBack.addEventListener("click", () => {
+    if (step > 1) {
+      step--;
+      render();
+    }
   });
-  dismissEls.forEach(el => el.addEventListener('click', commitAndClose));
-  document.addEventListener('keydown', onKey);
+  btnNext.addEventListener("click", () => {
+    if (step < total) {
+      step++;
+      render();
+    } else commitAndClose();
+  });
+  dismissEls.forEach((el) => el.addEventListener("click", commitAndClose));
+  document.addEventListener("keydown", onKey);
 
   root.hidden = false;
   render();

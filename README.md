@@ -23,7 +23,7 @@ cd theteebox-golfviewer
 node server/index.js
 ```
 
-Open http://localhost:8787 in your browser.
+Open <http://localhost:8787> in your browser.
 
 **Requirements:** Node.js 18 or newer — [nodejs.org](https://nodejs.org)
 
@@ -51,12 +51,13 @@ Each scoring source has a tiny adapter under `public/adapters/`:
 
 ```js
 export default {
-  id: 'allthailand',
-  name: 'All Thailand Golf Tour',
-  defaultUrl: 'https://www.allthailandgolftour.com/tournaments/gettable/{table_id}/score',
+  id: "allthailand",
+  name: "All Thailand Golf Tour",
+  defaultUrl:
+    "https://www.allthailandgolftour.com/tournaments/gettable/{table_id}/score",
   parse(html) {
     // returns { columns: [...], rows: [...] }
-  }
+  },
 };
 ```
 
