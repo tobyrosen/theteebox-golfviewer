@@ -27,7 +27,7 @@ Reference: [multiviewer.app](https://multiviewer.app/) for F1. Teebox is the gol
 
 ## Architecture
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │  Browser (http://localhost:8787)                        │
 │  ┌────────────────────┐  ┌─────────────────────────┐    │
@@ -97,7 +97,7 @@ When the user picks "Custom URL", the frontend just passes the proxied HTML thro
 
 ## File layout
 
-```
+```text
 teebox/
 ├── README.md
 ├── SPEC.md

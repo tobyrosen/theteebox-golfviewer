@@ -18,7 +18,7 @@ function defaultUrlForLeague(league) {
   return `https://site.api.espn.com/apis/site/v2/sports/golf/${league}/scoreboard`;
 }
 
-function parseFactory(league) {
+function parseFactory(_league) {
   return function parse(text) {
     let data;
     try {

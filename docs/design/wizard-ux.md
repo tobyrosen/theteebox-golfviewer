@@ -43,7 +43,7 @@ Local Teebox dashboard, first-clone experience. 3 steps, modal overlay, dark the
 
 ## ASCII mockup (representative — step 1)
 
-```
+```text
 ┌────────────────────────────────────────────────────────────────────┐
 │  ████ dimmed teebox layout behind the modal (rgba 0,0,0,0.55) ████  │
 │                                                                    │
@@ -77,7 +77,7 @@ Modal width 480px, vertically centered, 28px padding, radius 10px, 1px `--line` 
 
 Single flag: `localStorage["teebox.welcomed"]`.
 
-```
+```text
 boot
  │
  ├─ flag === "1"  ──► do nothing, wizard stays hidden
