@@ -57,6 +57,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "20"
+      - run: npm install
       - run: pip install pre-commit
       - run: pre-commit run --all-files --show-diff-on-failure
         continue-on-error: false

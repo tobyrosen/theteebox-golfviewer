@@ -35,7 +35,7 @@ Open <http://localhost:8787> in your browser.
 
 The browser blocks direct fetches to most scoring sites due to CORS. The Node proxy bypasses that:
 
-```
+```text
 browser ──fetch──▶ /proxy?url=... ──▶ Node fetches scoring HTML ──▶ returns to browser
                                                                           │
                                                                   parsed by adapter

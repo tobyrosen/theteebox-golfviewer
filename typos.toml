@@ -1,0 +1,12 @@
+# Cowork typos config — domain term allowlist (based on fleet template)
+#
+# False positives accepted here:
+#   - 'gir'/'GIR' = Greens in Regulation (golf metric)
+#   - 'THA'       = Thailand ISO 3-letter country code (golf scoring data)
+#   - 'FOM'       = Formula One Management (referenced in multiviewer research doc)
+
+[default.extend-words]
+gir = "gir"
+GIR = "GIR"
+THA = "THA"
+FOM = "FOM"
