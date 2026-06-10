@@ -7,6 +7,10 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const PUBLIC_DIR = join(__dirname, "..", "public");
 const PORT = process.env.PORT ? Number(process.env.PORT) : 8787;
 
+const { hosts: ALLOWED_HOSTS } = JSON.parse(
+  await readFile(join(__dirname, "allowlist.json"), "utf8"),
+);
+
 const MIME = {
   ".html": "text/html; charset=utf-8",
   ".js": "application/javascript; charset=utf-8",
@@ -49,6 +53,10 @@ async function proxy(req, res) {
 
   if (target.protocol !== "https:") {
     return send(res, 400, "HTTPS URLs only");
+  }
+
+  if (!ALLOWED_HOSTS.includes(target.hostname)) {
+    return send(res, 403, "Host not permitted");
   }
 
   try {
