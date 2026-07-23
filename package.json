@@ -5,6 +5,9 @@
   "type": "module",
   "main": "server/index.js",
   "scripts": {
+    "test": "node --test",
+    "build:check": "node scripts/check-build.mjs",
+    "test:gate": "npm test && npm run build:check",
     "start": "node server/index.js"
   },
   "devDependencies": {
