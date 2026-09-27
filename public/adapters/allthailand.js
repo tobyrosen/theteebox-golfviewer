@@ -70,7 +70,7 @@ function parse(html) {
 }
 
 function formatName(name) {
-  // "Amarin KRAIVIXIEN" -> "Amarin Kraivixien"
+  // "Sample PLAYER" -> "Sample Player"
   return name
     .split(/\s+/)
     .map((part) => {

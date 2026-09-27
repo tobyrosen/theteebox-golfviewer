@@ -1,5 +1,4 @@
-// Cowork shared ESLint flat config base.
-// Copied into JS/TS repos by propagate.py.
+// ESLint flat configuration for JavaScript and TypeScript.
 // Repos can extend this with project-specific rules.
 //
 // To use in a repo:

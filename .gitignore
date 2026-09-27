@@ -6,5 +6,6 @@ node_modules/
 .idea/
 .vscode/
 *.tmp
+# Local Claude Code configuration and worktrees
 .claude/
 *.command

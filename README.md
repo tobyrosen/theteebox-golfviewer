@@ -2,8 +2,6 @@
 
 A local, open-source dashboard for watching golf — live stream on the left, leaderboard on the right. Inspired by [multiviewer.app](https://multiviewer.app/) for F1.
 
-![Teebox screenshot](docs/screenshot.png)
-
 Zero external dependencies. Runs on Node 18+. Single HTML page + a tiny proxy server.
 
 ## Quick start

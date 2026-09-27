@@ -1,4 +1,4 @@
-# Cowork typos config — domain term allowlist (based on fleet template)
+# Spelling configuration — domain term allowlist
 #
 # False positives accepted here:
 #   - 'gir'/'GIR' = Greens in Regulation (golf metric)

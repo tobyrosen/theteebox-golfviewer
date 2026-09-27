@@ -1,5 +1,4 @@
 # Standard CI workflow (language-aware)
-# Propagated to <repo>/.github/workflows/ci.yml
 #
 # Runs:
 #   - pre-commit hooks (same checks devs run locally)

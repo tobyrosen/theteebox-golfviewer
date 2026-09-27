@@ -139,7 +139,7 @@ Adapter normalizes to:
 {
   pos: '1',
   score: '-5',
-  player: 'Amarin Kraivixien',
+  player: 'Sample Player',
   country: 'THA',
   holes: ['','','','','','','','','','3','3','3','3','3','4','3','',''],
   today: '-5',
